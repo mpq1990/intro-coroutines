@@ -15,6 +15,17 @@ TODO: Write aggregation code.
  You can use 'Navigate | Test' menu action (note the shortcut) to navigate to the test.
 */
 fun List<User>.aggregate(): List<User> {
-    return this.groupBy { it.login }.map { (login, group) -> User(login, group.sumBy { it.contributions }) }
-        .sortedByDescending { it.contributions }
+    return this.groupingBy { it.login }.aggregateTo(mutableMapOf()) { key, accumulator: Int?, element, first ->
+        if (first) {
+            element.contributions
+        } else {
+            accumulator?.plus(element.contributions)
+        }
+    }.map {
+        val contributions = it.value ?: 0
+        User(it.key, contributions)
+    }.sortedByDescending { it.contributions }
+
+//    return this.groupBy { it.login }.map { (login, group) -> User(login, group.sumBy { it.contributions }) }
+//        .sortedByDescending { it.contributions }
 }
