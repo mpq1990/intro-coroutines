@@ -15,7 +15,7 @@ TODO: Write aggregation code.
  You can use 'Navigate | Test' menu action (note the shortcut) to navigate to the test.
 */
 fun List<User>.aggregate(): List<User> {
-    return this.groupingBy { it.login }.aggregateTo(mutableMapOf()) { key, accumulator: Int?, element, first ->
+    return this.groupingBy { it.login }.aggregateTo(mutableMapOf()) { _, accumulator: Int?, element, first ->
         if (first) {
             element.contributions
         } else {
