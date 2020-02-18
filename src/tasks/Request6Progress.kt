@@ -23,4 +23,3 @@ suspend fun loadContributorsProgress(
         updateResults(allUsers, index == repos.lastIndex)
     }
 }
-    
